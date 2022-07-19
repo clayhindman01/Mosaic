@@ -26,7 +26,6 @@ export default class Signup extends Component {
       this.setState({
         isLoading: true,
       })
-      console.log(firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password))
       firebase
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
