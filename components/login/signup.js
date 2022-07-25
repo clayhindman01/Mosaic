@@ -1,13 +1,14 @@
-// components/login.js
+// components/signup.js
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
-import firebase from '../database/firebase';
+import firebase from '../../database/firebase';
 
-export default class Login extends Component {
+export default class Signup extends Component {
   
   constructor() {
     super();
     this.state = { 
+      displayName: '',
       email: '', 
       password: '',
       isLoading: false
@@ -18,27 +19,30 @@ export default class Login extends Component {
     state[prop] = val;
     this.setState(state);
   }
-  userLogin = () => {
+  registerUser = () => {
     if(this.state.email === '' && this.state.password === '') {
-      Alert.alert('Enter details to signin!')
+      Alert.alert('Enter details to signup!')
     } else {
       this.setState({
         isLoading: true,
       })
       firebase
       .auth()
-      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then((res) => {
-        console.log(res)
-        console.log('User logged-in successfully!')
+        res.user.updateProfile({
+          displayName: this.state.displayName
+        })
+        console.log('User registered successfully!')
         this.setState({
           isLoading: false,
+          displayName: '',
           email: '', 
           password: ''
         })
-        this.props.navigation.navigate('Dashboard')
+        this.props.navigation.navigate('Login')
       })
-      .catch(error => this.setState({ errorMessage: error.message }))
+      .catch(error => this.setState({ errorMessage: error.message }))      
     }
   }
   render() {
@@ -51,6 +55,12 @@ export default class Login extends Component {
     }    
     return (
       <View style={styles.container}>  
+        <TextInput
+          style={styles.inputStyle}
+          placeholder="Name"
+          value={this.state.displayName}
+          onChangeText={(val) => this.updateInputVal(val, 'displayName')}
+        />      
         <TextInput
           style={styles.inputStyle}
           placeholder="Email"
@@ -67,13 +77,13 @@ export default class Login extends Component {
         />   
         <Button
           color="#3740FE"
-          title="Signin"
-          onPress={() => this.userLogin()}
-        />   
+          title="Signup"
+          onPress={() => this.registerUser()}
+        />
         <Text 
           style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('Signup')}>
-          Don't have account? Click here to signup
+          onPress={() => this.props.navigation.navigate('Login')}>
+          Already Registered? Click here to login
         </Text>                          
       </View>
     );

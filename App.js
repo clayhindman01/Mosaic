@@ -2,18 +2,22 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from './components/login';
-import Signup from './components/signup';
-import Dashboard from './components/dashboard';
+import 'react-native-gesture-handler';
+
+import Login from './components/login/login';
+import Signup from './components/login/signup';
+import Dashboard from './navigation/pages/Homepage';
+import MainContainer from './navigation/MainContainer';
+
 const Stack = createStackNavigator();
 function MyStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Signup"
+      initialRouteName="Login"
       screenOptions={{
         headerTitleAlign: 'center',
         headerStyle: {
-          backgroundColor: '#3740FE',
+          backgroundColor: 'dodgerblue',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -41,6 +45,14 @@ function MyStack() {
          {headerLeft: null} 
        ]}
       />
+      <Stack.Screen
+        name="NavBar"
+        component={MainContainer}
+        options={[
+          {title: "NavBar"},
+          {headerLeft: null}
+        ]}
+        />
     </Stack.Navigator>
   );
 }

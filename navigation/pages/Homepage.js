@@ -1,7 +1,8 @@
 // components/dashboard.js
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
-import firebase from '../database/firebase';
+import firebase from '../../database/firebase';
+import MainContainer from '../MainContainer';
 export default class Dashboard extends Component {
   constructor() {
     super();
@@ -21,16 +22,19 @@ export default class Dashboard extends Component {
       uid: firebase.auth().currentUser.uid
     }    
     return (
-      <View style={styles.container}>
-        <Text style = {styles.textStyle}>
-          Hello, {this.state.displayName}
-        </Text>
-        <Button
-          color="#3740FE"
-          title="Logout"
-          onPress={() => this.signOut()}
-        />
-      </View>
+      <>
+        <View style={styles.container}>
+          <Text style = {styles.textStyle}>
+            Hello, {this.state.displayName}. This is the homepage
+          </Text>
+          <Button
+            color="#3740FE"
+            title="Logout"
+            onPress={() => this.signOut()}
+          />
+        </View>
+        <MainContainer />
+      </>
     );
   }
 }
