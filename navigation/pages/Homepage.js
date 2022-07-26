@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import firebase from '../../database/firebase';
-import MainContainer from '../MainContainer';
+import NavBar from '../NavBar';
 export default class Dashboard extends Component {
   constructor() {
     super();
@@ -33,7 +33,7 @@ export default class Dashboard extends Component {
             onPress={() => this.signOut()}
           />
         </View>
-        <MainContainer />
+        <NavBar />
       </>
     );
   }

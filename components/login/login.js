@@ -36,7 +36,7 @@ export default class Login extends Component {
           email: '', 
           password: ''
         })
-        this.props.navigation.navigate('Dashboard')
+        this.props.navigation.navigate('Mosaic')
       })
       .catch(error => this.setState({ errorMessage: error.message }))
     }

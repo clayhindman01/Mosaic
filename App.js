@@ -6,8 +6,10 @@ import 'react-native-gesture-handler';
 
 import Login from './components/login/login';
 import Signup from './components/login/signup';
-import Dashboard from './navigation/pages/Homepage';
-import MainContainer from './navigation/MainContainer';
+import Homepage from './navigation/pages/Homepage';
+import NavBar from './navigation/NavBar';
+import CameraScreen from './navigation/pages/CameraScreen';
+import Account from './navigation/pages/Account';
 
 const Stack = createStackNavigator();
 function MyStack() {
@@ -38,18 +40,34 @@ function MyStack() {
         }
       />
       <Stack.Screen 
-       name="Dashboard" 
-       component={Dashboard} 
+       name="Mosaic" 
+       component={Homepage} 
        options={[
-         { title: 'Dashboard' },
+         { title: 'Homepage' },
          {headerLeft: null} 
        ]}
       />
       <Stack.Screen
         name="NavBar"
-        component={MainContainer}
+        component={NavBar}
         options={[
           {title: "NavBar"},
+          {headerLeft: null}
+        ]}
+        />
+        <Stack.Screen
+        name="Camera"
+        component={CameraScreen}
+        options={[
+          {title: "Camera"},
+          {headerLeft: null}
+        ]}
+        />
+        <Stack.Screen
+        name="Account"
+        component={Account}
+        options={[
+          {title: "Account"},
           {headerLeft: null}
         ]}
         />

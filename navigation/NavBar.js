@@ -1,27 +1,31 @@
 import * as React from 'react'
 import { View, Text, StyleSheet } from 'react-native';
 import { Button} from 'react-native-paper';     
+import { useNavigation } from '@react-navigation/native';
 
-export default function MainContainer() {
+export default function NavBar() {
+
+    const navigation = useNavigation();
+
     return(
         <View style={styles.container}>
             <Button 
                 icon="home"
                 style={ styles.buttonIconStyle }
                 labelStyle={styles.iconStyle} 
-                onPress={() => {alert("Pressed Home Button")}}
+                onPress={() => navigation.navigate("Mosaic")}
             />
             <Button 
                 icon="camera" 
                 style={ styles.buttonIconStyle }
                 labelStyle={styles.iconStyle} 
-                onPress={() => {alert("Pressed Plus Button")}}
+                onPress={() => navigation.navigate("Camera")}
             />
             <Button
                 style={ styles.buttonIconStyle } 
                 icon="account" 
                 labelStyle={styles.iconStyle} 
-                onPress={() => {alert("Pressed Account Button")}}
+                onPress={() => navigation.navigate("Account")}
             />
         </View>
     );
@@ -35,14 +39,10 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 65,
         zIndex: 2,
-        // borderTopLeftRadius: 10,
-        // borderTopRightRadius: 10,
         marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        borderTopWidth: "2px",
-        borderTopColor: "dodgerblue"
     },
     iconStyle: {
         fontSize: 40,
