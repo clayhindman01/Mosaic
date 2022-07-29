@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import { Camera, CameraType } from 'expo-camera'
 import { Icon } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
 
 export default function CameraScreen() {
 
+    const navigation = useNavigation()
     const [hasPermission, setHasPermission] = useState(null)
-    const {type, setType} = useState(CameraType.back);
+    const [type, setType] = useState(CameraType.back);
+    const [picture, setPicture] = useState('')
 
     useEffect(() => {
         (async () => {
@@ -29,12 +32,32 @@ export default function CameraScreen() {
    };
 
   onPictureSaved = photo => {
-      console.log(photo);
+    setPicture(photo.uri)
   }  
 
     return (
         <View style={styles.container}>
+          {picture? (
+            <Image source={{ uri: picture }} style={{width:'100%',height:'100%'}} />
+          ) :
+          
           <Camera style={styles.camera} type={type} ref={(ref) => { this.camera = ref }} >
+
+          <TouchableOpacity
+            style={styles.textContainer}
+            onPress={() => {
+              setType(type === CameraType.back ? CameraType.front : CameraType.back);
+            }}>
+              <Icon 
+                style={styles.text}
+                name="camera-flip-outline"
+                type="material-community"
+                color="lightgray"
+                size={50}
+                padding={10}
+                />  
+            </TouchableOpacity>
+
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.button}
@@ -45,11 +68,12 @@ export default function CameraScreen() {
                   type="material-community"
                   onPress={this.takePicture}
                   color="lightgray"
-                  size={125}
+                  size={100}
                 />
               </TouchableOpacity>
             </View>
           </Camera>
+          }
         </View>
       );
 }
@@ -76,5 +100,12 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: "100%"
+  },
+  textContainer: {
+    flexDirection: 'row'
+  },
+  text: {
+
+    justifyContent: 'flex-start'
   },
 });

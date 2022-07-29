@@ -19,7 +19,9 @@ export default function NavBar() {
                 icon="camera" 
                 style={ styles.buttonIconStyle }
                 labelStyle={styles.iconStyle} 
-                onPress={() => navigation.navigate("Camera")}
+                onPress={() => {
+                    navigation.navigate("Camera")
+                }}
             />
             <Button
                 style={ styles.buttonIconStyle } 
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         bottom: 0,
-        backgroundColor: '#fff',
+        backgroundColor: '#00365a',
         width: '100%',
         height: 65,
         zIndex: 2,
@@ -46,7 +48,7 @@ const styles = StyleSheet.create({
     },
     iconStyle: {
         fontSize: 40,
-        color: 'dodgerblue',
+        color: '#ffe',
         flex: 1,
         paddingLeft: 10,
         marginHorizontal: -10,

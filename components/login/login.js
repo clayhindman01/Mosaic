@@ -66,7 +66,11 @@ export default class Login extends Component {
           secureTextEntry={true}
         />   
         <Button
-          color="#3740FE"
+          color="#88bba8"
+          style={{
+            backgroundColor: '#00365a',
+            padding: '10px'
+          }}
           title="Signin"
           onPress={() => this.userLogin()}
         />   
@@ -93,11 +97,11 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingBottom: 15,
     alignSelf: "center",
-    borderColor: "#ccc",
+    borderColor: "#88bba8",
     borderBottomWidth: 1
   },
   loginText: {
-    color: '#3740FE',
+    color: '#00365a',
     marginTop: 25,
     textAlign: 'center'
   },
@@ -109,6 +113,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#888bba8'
   }
 });

@@ -19,9 +19,9 @@ function MyStack() {
       screenOptions={{
         headerTitleAlign: 'center',
         headerStyle: {
-          backgroundColor: 'dodgerblue',
+          backgroundColor: '#00365a',
         },
-        headerTintColor: '#fff',
+        headerTintColor: '#ffe',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
@@ -60,7 +60,7 @@ function MyStack() {
         component={CameraScreen}
         options={[
           {title: "Camera"},
-          {headerLeft: null}
+          {headerLeft: null},
         ]}
         />
         <Stack.Screen
