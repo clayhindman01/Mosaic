@@ -1,7 +1,8 @@
 // components/signup.js
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import firebase from '../../database/firebase';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default class Signup extends Component {
   
@@ -54,37 +55,58 @@ export default class Signup extends Component {
       )
     }    
     return (
-      <View style={styles.container}>  
-        <TextInput
-          style={styles.inputStyle}
-          placeholder="Name"
-          value={this.state.displayName}
-          onChangeText={(val) => this.updateInputVal(val, 'displayName')}
-        />      
-        <TextInput
-          style={styles.inputStyle}
-          placeholder="Email"
-          value={this.state.email}
-          onChangeText={(val) => this.updateInputVal(val, 'email')}
-        />
-        <TextInput
-          style={styles.inputStyle}
-          placeholder="Password"
-          value={this.state.password}
-          onChangeText={(val) => this.updateInputVal(val, 'password')}
-          maxLength={15}
-          secureTextEntry={true}
-        />   
-        <Button
-          color="#3740FE"
-          title="Signup"
+      <View style={styles.container}> 
+        <View style={{flex: 1, flexDirection: 'column',justifyContent: 'center'}}>
+          <Text style={styles.loginText}>Sign Up.</Text>
+        </View>
+        <View style={styles.slantTriange}></View>
+        
+        <View style={styles.slant}> 
+        <LinearGradient
+          colors={['#88bba8', '#718ac7']}
+          style={styles.gradient}
+        >
+          <View style={{marginBottom: 25, padding: 35, paddingBottom: 0,}}>
+          <TextInput
+              style={styles.inputStyle}
+              placeholderTextColor="lightgray"
+              placeholder="Display Name"
+              value={this.state.displayName}
+              onChangeText={(val) => this.updateInputVal(val, 'displayName')}
+              maxLength={15}
+            />  
+            <TextInput
+              style={styles.inputStyle}
+              placeholder="Email"
+              placeholderTextColor="lightgray"
+              value={this.state.email}
+              onChangeText={(val) => this.updateInputVal(val, 'email')}
+            />
+            <TextInput
+              style={styles.inputStyle}
+              placeholderTextColor="lightgray"
+              placeholder="Password"
+              value={this.state.password}
+              onChangeText={(val) => this.updateInputVal(val, 'password')}
+              maxLength={15}
+              secureTextEntry={true}
+            />  
+          </View> 
+        <TouchableOpacity
+          style={styles.button}
           onPress={() => this.registerUser()}
-        />
-        <Text 
-          style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('Login')}>
-          Already Registered? Click here to login
-        </Text>                          
+        >
+          <Text style={styles.buttonText}>Signup</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => this.props.navigation.navigate('Login')}
+        >
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>   
+        </LinearGradient>
+        </View> 
+        
       </View>
     );
   }
@@ -94,8 +116,6 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
-    padding: 35,
     backgroundColor: '#fff'
   },
   inputStyle: {
@@ -103,13 +123,17 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingBottom: 15,
     alignSelf: "center",
-    borderColor: "#ccc",
-    borderBottomWidth: 1
+    borderColor: "#fff",
+    borderBottomWidth: 1,
+    color: "#2b3650",
+    fontSize: 18,
   },
   loginText: {
-    color: '#3740FE',
-    marginTop: 25,
-    textAlign: 'center'
+    color: '#2b3650',
+    marginTop: 120,
+    padding: 35,
+    fontSize: 30,
+    fontWeight: 'bold'
   },
   preloader: {
     left: 0,
@@ -119,6 +143,37 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#888bba8'
+  },
+  slant: {
+    flex: 1.75,
+    backgroundColor: '#88bba8',
+  },
+  slantTriange: {
+    borderStyle: "solid",
+    borderLeftWidth: 500,
+    borderBottomWidth:100,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "#88bba8",
+  },
+  button: {
+    backgroundColor: '#fff',
+    padding: 15,
+    width: 100,
+    alignSelf: 'center',
+    textAlign: 'center',
+    borderRadius: 25,
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: "#2b3650",
+    textAlign: "center",
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  gradient: {
+    width: '100%',
+    height: '100%'
   }
 });

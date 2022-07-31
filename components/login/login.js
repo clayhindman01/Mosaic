@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import firebase from '../../database/firebase';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default class Login extends Component {
   
@@ -57,25 +58,30 @@ export default class Login extends Component {
           <Text style={styles.loginText}>Log In.</Text>
         </View>
         <View style={styles.slantTriange}></View>
+        
         <View style={styles.slant}> 
-        <View style={{marginBottom: 25}}>
-          <TextInput
-            style={styles.inputStyle}
-            placeholder="Email"
-            placeholderTextColor="lightgray"
-            value={this.state.email}
-            onChangeText={(val) => this.updateInputVal(val, 'email')}
-          />
-          <TextInput
-            style={styles.inputStyle}
-            placeholderTextColor="lightgray"
-            placeholder="Password"
-            value={this.state.password}
-            onChangeText={(val) => this.updateInputVal(val, 'password')}
-            maxLength={15}
-            secureTextEntry={true}
-          />  
-        </View> 
+        <LinearGradient
+          colors={['#2b3650', '#718ac7']}
+          style={styles.gradient}
+        >
+          <View style={{marginBottom: 25, padding: 35, paddingBottom: 0,}}>
+            <TextInput
+              style={styles.inputStyle}
+              placeholder="Email"
+              placeholderTextColor="lightgray"
+              value={this.state.email}
+              onChangeText={(val) => this.updateInputVal(val, 'email')}
+            />
+            <TextInput
+              style={styles.inputStyle}
+              placeholderTextColor="lightgray"
+              placeholder="Password"
+              value={this.state.password}
+              onChangeText={(val) => this.updateInputVal(val, 'password')}
+              maxLength={15}
+              secureTextEntry={true}
+            />  
+          </View> 
         <TouchableOpacity
           style={styles.button}
           onPress={() => this.userLogin()}
@@ -88,7 +94,9 @@ export default class Login extends Component {
         >
           <Text style={styles.buttonText}>Signup</Text>
         </TouchableOpacity>   
-        </View>                      
+        </LinearGradient>
+        </View> 
+        
       </View>
     );
   }
@@ -130,12 +138,12 @@ const styles = StyleSheet.create({
   slant: {
     flex: 1.75,
     backgroundColor: '#2b3650',
-    padding: 35,
+    // padding: 35,
   },
   slantTriange: {
     borderStyle: "solid",
     borderLeftWidth: 500,
-    borderBottomWidth: 100,
+    borderBottomWidth:100,
     borderLeftColor: "transparent",
     borderRightColor: "transparent",
     borderBottomColor: "#2b3650",
@@ -154,5 +162,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: 'bold',
     fontSize: 18,
+  },
+  gradient: {
+    width: '100%',
+    height: '100%'
   }
 });
