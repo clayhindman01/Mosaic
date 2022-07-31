@@ -17,14 +17,7 @@ function MyStack() {
     <Stack.Navigator
       initialRouteName="Login"
       screenOptions={{
-        headerTitleAlign: 'center',
-        headerStyle: {
-          backgroundColor: '#00365a',
-        },
-        headerTintColor: '#ffe',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
+        headerShown: false
       }}>
       <Stack.Screen 
         name="Signup" 
@@ -42,10 +35,7 @@ function MyStack() {
       <Stack.Screen 
        name="Mosaic" 
        component={Homepage} 
-       options={[
-         { title: 'Homepage' },
-         {headerLeft: null} 
-       ]}
+       options={{header: "Homepage", gestureEnabled: false}}
       />
       <Stack.Screen
         name="NavBar"

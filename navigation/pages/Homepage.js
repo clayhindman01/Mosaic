@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import firebase from '../../database/firebase';
 import NavBar from '../NavBar';
+import { doc, getDoc } from 'firebase/firestore'
+
+const db = firebase.firestore()
+
 export default class Dashboard extends Component {
   constructor() {
     super();
@@ -16,10 +20,24 @@ export default class Dashboard extends Component {
     })
     .catch(error => this.setState({ errorMessage: error.message }))
   }  
+
+  getDocuments = async () => {
+    const docRef = doc(db, "users", "UEUPYSPmIIrb5EGpnRpP");
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log(docSnap.data().user_id);
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }
+
   render() {
     this.state = { 
       displayName: firebase.auth().currentUser.displayName,
-      uid: firebase.auth().currentUser.uid
+      uid: firebase.auth().currentUser.uid,
+      document: this.getDocuments()
     }    
     return (
       <>

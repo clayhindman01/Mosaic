@@ -1,6 +1,6 @@
 // components/login.js
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import firebase from '../../database/firebase';
 
 export default class Login extends Component {
@@ -29,8 +29,6 @@ export default class Login extends Component {
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then((res) => {
-        console.log(res)
-        console.log('User logged-in successfully!')
         this.setState({
           isLoading: false,
           email: '', 
@@ -38,7 +36,11 @@ export default class Login extends Component {
         })
         this.props.navigation.navigate('Mosaic')
       })
-      .catch(error => this.setState({ errorMessage: error.message }))
+      .catch(error => {
+        this.setState({isLoading: false})
+        alert(error.message)
+        navigator.navigate('Signup')
+      })
     }
   }
   render() {
@@ -50,35 +52,43 @@ export default class Login extends Component {
       )
     }    
     return (
-      <View style={styles.container}>  
-        <TextInput
-          style={styles.inputStyle}
-          placeholder="Email"
-          value={this.state.email}
-          onChangeText={(val) => this.updateInputVal(val, 'email')}
-        />
-        <TextInput
-          style={styles.inputStyle}
-          placeholder="Password"
-          value={this.state.password}
-          onChangeText={(val) => this.updateInputVal(val, 'password')}
-          maxLength={15}
-          secureTextEntry={true}
-        />   
-        <Button
-          color="#88bba8"
-          style={{
-            backgroundColor: '#00365a',
-            padding: '10px'
-          }}
-          title="Signin"
+      <View style={styles.container}> 
+        <View style={{flex: 1, flexDirection: 'column',justifyContent: 'center'}}>
+          <Text style={styles.loginText}>Log In.</Text>
+        </View>
+        <View style={styles.slantTriange}></View>
+        <View style={styles.slant}> 
+        <View style={{marginBottom: 25}}>
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="Email"
+            placeholderTextColor="lightgray"
+            value={this.state.email}
+            onChangeText={(val) => this.updateInputVal(val, 'email')}
+          />
+          <TextInput
+            style={styles.inputStyle}
+            placeholderTextColor="lightgray"
+            placeholder="Password"
+            value={this.state.password}
+            onChangeText={(val) => this.updateInputVal(val, 'password')}
+            maxLength={15}
+            secureTextEntry={true}
+          />  
+        </View> 
+        <TouchableOpacity
+          style={styles.button}
           onPress={() => this.userLogin()}
-        />   
-        <Text 
-          style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('Signup')}>
-          Don't have account? Click here to signup
-        </Text>                          
+        >
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => this.props.navigation.navigate('Signup')}
+        >
+          <Text style={styles.buttonText}>Signup</Text>
+        </TouchableOpacity>   
+        </View>                      
       </View>
     );
   }
@@ -88,8 +98,6 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
-    padding: 35,
     backgroundColor: '#fff'
   },
   inputStyle: {
@@ -97,13 +105,17 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingBottom: 15,
     alignSelf: "center",
-    borderColor: "#88bba8",
-    borderBottomWidth: 1
+    borderColor: "#fff",
+    borderBottomWidth: 1,
+    color: "#fff",
+    fontSize: 18,
   },
   loginText: {
-    color: '#00365a',
-    marginTop: 25,
-    textAlign: 'center'
+    color: '#2b3650',
+    marginTop: 120,
+    padding: 35,
+    fontSize: 30,
+    fontWeight: 'bold'
   },
   preloader: {
     left: 0,
@@ -114,5 +126,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#888bba8'
+  },
+  slant: {
+    flex: 1.75,
+    backgroundColor: '#2b3650',
+    padding: 35,
+  },
+  slantTriange: {
+    borderStyle: "solid",
+    borderLeftWidth: 500,
+    borderBottomWidth: 100,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "#2b3650",
+  },
+  button: {
+    backgroundColor: '#fff',
+    padding: 15,
+    width: 100,
+    alignSelf: 'center',
+    textAlign: 'center',
+    borderRadius: 25,
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: "#2b3650",
+    textAlign: "center",
+    fontWeight: 'bold',
+    fontSize: 18,
   }
 });
