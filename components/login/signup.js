@@ -43,7 +43,10 @@ export default class Signup extends Component {
         })
         this.props.navigation.navigate('Login')
       })
-      .catch(error => this.setState({ errorMessage: error.message }))      
+      .catch(error => {this.setState({ isLoading: false })
+        alert(error.message)
+        navigator.navigate('signup')
+    })      
     }
   }
   render() {

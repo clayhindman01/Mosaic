@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import firebase from '../../database/firebase';
 import NavBar from '../NavBar';
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc } from 'firebase/firestore';
+import Header from '../../components/Header.js';
 
 const db = firebase.firestore()
 
@@ -42,6 +43,7 @@ export default class Dashboard extends Component {
     return (
       <>
         <View style={styles.container}>
+          <Header />
           <Text style = {styles.textStyle}>
             Hello, {this.state.displayName}. This is the homepage
           </Text>
