@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet, TouchableOpacity, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import firebase from '../../database/firebase';
 import { LinearGradient } from 'expo-linear-gradient';
+import config from '../../database/utils/config';
 
 export default class Signup extends Component {
   
@@ -12,7 +13,8 @@ export default class Signup extends Component {
       displayName: '',
       email: '', 
       password: '',
-      isLoading: false
+      isLoading: false,
+      imageURL: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/asainKanye.jpg?alt=media`
     }
   }
   updateInputVal = (val, prop) => {
@@ -32,7 +34,8 @@ export default class Signup extends Component {
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then((res) => {
         res.user.updateProfile({
-          displayName: this.state.displayName
+          displayName: this.state.displayName,
+          photoURL: this.state.imageURL
         })
         console.log('User registered successfully!')
         this.setState({
@@ -43,7 +46,11 @@ export default class Signup extends Component {
         })
         this.props.navigation.navigate('Login')
       })
-      .catch(error => this.setState({ errorMessage: error.message }))      
+      .catch(error => {
+        this.setState({isLoading: false})
+        alert(error.message)
+        navigator.navigate('Signup')
+      })      
     }
   }
   render() {
