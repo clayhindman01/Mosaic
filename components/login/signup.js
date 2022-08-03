@@ -14,7 +14,7 @@ export default class Signup extends Component {
       email: '', 
       password: '',
       isLoading: false,
-      imageURL: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/asainKanye.jpg?alt=media`
+      imageURL: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/no-image.png?alt=media`
     }
   }
   updateInputVal = (val, prop) => {

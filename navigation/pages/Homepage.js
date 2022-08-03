@@ -1,25 +1,21 @@
 // components/dashboard.js
-import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, Button } from 'react-native';
+import React, { Component, useCallback } from 'react';
+import { StyleSheet, View, Image, Text, TouchableHighlight } from 'react-native';
 import firebase from '../../database/firebase';
 import { doc, getDoc } from 'firebase/firestore'
 import db from '../../database/firestore';
 import Header from '../../components/header';
-import { ImagePixelated } from "react-pixelate"
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 
 export default class Dashboard extends Component {
   constructor() {
     super();
     this.state = { 
-      uid: ''
+      uid: '',
+      user: ''
     }
   }
-  signOut = () => {
-    firebase.auth().signOut().then(() => {
-      this.props.navigation.navigate('Login')
-    })
-    .catch(error => this.setState({ errorMessage: error.message }))
-  }  
+  
 
   getDocuments = async () => {
     const docRef = doc(db, "users", "UEUPYSPmIIrb5EGpnRpP");
@@ -33,27 +29,36 @@ export default class Dashboard extends Component {
     }
   }
 
+  componentDidMount() {
+    const user = firebase.auth().currentUser
+  }
+
+  componentDidUpdate() {
+    const user = firebase.auth().currentUser
+  }
+
   render() {
+    let user = firebase.auth().currentUser
     this.state = { 
-      displayName: firebase.auth().currentUser.displayName,
-      photoURL: firebase.auth().currentUser.photoURL,
-      uid: firebase.auth().currentUser.uid,
-      document: this.getDocuments()
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      uid: user.uid,
+      document: this.getDocuments(),
+      uri: 'https://cdn.pixabay.com/photo/2022/07/17/19/40/animal-7328225_960_720.jpg'
     }    
     return (
       <>
         <Header includeImage={true} />
         <View style={styles.container}>
+          <Text style={styles.currentMosaic}>Current Mosaic:</Text>
+          <TouchableHighlight style={{width: '100%', height: 200}} onPress={() => this.props.navigation.navigate('Canvas', {uri: this.state.uri})}>
           <Image 
             style={{width: '100%', height: 200}}
-            source={{uri:'https://pixabay.com/get/g8855c1a93172b52fd551de4d51b0f0a9cdd2e5ee9853ee2eb8fbb4cadea52fa5dba92b07f09b77cc31f8af6e4d19863e_1280.jpg'}}
+            source={{uri: this.state.uri}}
             blurRadius={1}
           />
-          <Button
-            color="#3740FE"
-            title="Logout"
-            onPress={() => this.signOut()}
-          />
+          </TouchableHighlight>
+          
         </View>
       </>
     );
@@ -72,5 +77,10 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: 15,
     marginBottom: 20
+  },
+  currentMosaic: {
+    fontSize: 20,
+    fontWeight: '500',
+    color: '#2b3650'
   }
 });

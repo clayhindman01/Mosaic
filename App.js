@@ -7,9 +7,9 @@ import 'react-native-gesture-handler';
 import Login from './components/login/login';
 import Signup from './components/login/signup';
 import Homepage from './navigation/pages/Homepage';
-import NavBar from './navigation/NavBar';
 import CameraScreen from './navigation/pages/CameraScreen';
 import Account from './navigation/pages/Account';
+import Canvas from './navigation/pages/Canvas';
 
 const Stack = createStackNavigator();
 function MyStack() {
@@ -38,10 +38,10 @@ function MyStack() {
        options={{header: "Homepage", gestureEnabled: false}}
       />
       <Stack.Screen
-        name="NavBar"
-        component={NavBar}
+        name="Canvas"
+        component={Canvas}
         options={[
-          {title: "NavBar"},
+          {title: "Canvas"},
           {headerLeft: null}
         ]}
         />

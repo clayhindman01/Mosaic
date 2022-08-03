@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   },
   slant: {
     flex: 1.75,
-    backgroundColor: '#2b3650',
+    backgroundColor: '',
     // padding: 35,
   },
   slantTriange: {
