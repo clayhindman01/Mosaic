@@ -1,11 +1,13 @@
 // components/dashboard.js
 import React, { Component, useCallback } from 'react';
-import { StyleSheet, View, Image, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableHighlight, ScrollView } from 'react-native';
 import firebase from '../../database/firebase';
 import { doc, getDoc } from 'firebase/firestore'
 import db from '../../database/firestore';
 import Header from '../../components/header';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
+import Mosaic from '../../components/mosaic';
 
 export default class Dashboard extends Component {
   constructor() {
@@ -46,20 +48,23 @@ export default class Dashboard extends Component {
       document: this.getDocuments(),
       uri: 'https://cdn.pixabay.com/photo/2022/07/17/19/40/animal-7328225_960_720.jpg'
     }    
+    
     return (
       <>
         <Header includeImage={true} />
-        <View style={styles.container}>
-          <Text style={styles.currentMosaic}>Current Mosaic:</Text>
-          <TouchableHighlight style={{width: '100%', height: 200}} onPress={() => this.props.navigation.navigate('Canvas', {uri: this.state.uri})}>
-          <Image 
-            style={{width: '100%', height: 200}}
-            source={{uri: this.state.uri}}
-            blurRadius={1}
-          />
-          </TouchableHighlight>
-          
-        </View>
+          <View style={styles.container}>
+          <LinearGradient
+            colors={['lightgray', '#d6dbd2']}
+            style={styles.gradient}
+          >
+            <ScrollView style={{width: '100%'}} showsVerticalScrollIndicator={false}>
+            <Mosaic uri={this.state.uri} todaysMosaic={true} complete={false}></Mosaic>
+            <Mosaic uri='https://cdn.pixabay.com/photo/2022/06/28/15/21/bach-7289941_960_720.jpg' todaysMosaic={false} complete={true}></Mosaic>
+            <Mosaic uri='https://cdn.pixabay.com/photo/2022/07/26/19/09/spotted-owlet-7346555_960_720.jpg' todaysMosaic={false} complete={true}></Mosaic>
+            <Mosaic uri='https://cdn.pixabay.com/photo/2022/04/04/13/54/city-7111380_960_720.jpg' todaysMosaic={false} complete={true}></Mosaic>
+            </ScrollView>
+            </LinearGradient>
+          </View>
       </>
     );
   }
@@ -70,17 +75,13 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingTop: 20,
-    paddingHorizontal: 15,
-    backgroundColor: '#fff'
+    backgroundColor: 'lightgray',
   },
-  textStyle: {
-    fontSize: 15,
-    marginBottom: 20
+  gradient: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    // paddingTop: 15,
   },
-  currentMosaic: {
-    fontSize: 20,
-    fontWeight: '500',
-    color: '#2b3650'
-  }
 });

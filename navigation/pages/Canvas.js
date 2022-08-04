@@ -33,6 +33,17 @@ export default function Canvas({ route, navigation }) {
                     />
                 </ScrollView>
             </ScrollView>
+
+            <View style={{position: 'absolute', bottom: 30, left: ((Dimensions.get('screen').width/2)-30)}}>
+                <Icon
+                    style={styles.camera}
+                    name="camera"
+                    type="material-community"
+                    color="#2b3650"
+                    size={65}
+                    onPress={() => navigation.navigate("Camera")}
+                />
+            </View>
             <View style={{position: 'absolute', top: 0, left: 0}}>
                 <Icon 
                     style={styles.goBack}
@@ -56,5 +67,5 @@ const styles = StyleSheet.create({
         marginVertical: 50,
         marginHorizontal: 20,
         backgroundColor: 'transparent',
-    }
+    },
 })

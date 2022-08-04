@@ -138,7 +138,6 @@ const styles = StyleSheet.create({
   slant: {
     flex: 1.75,
     backgroundColor: '',
-    // padding: 35,
   },
   slantTriange: {
     borderStyle: "solid",

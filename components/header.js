@@ -10,7 +10,7 @@ export default function Header(props) {
     return(
         <SafeAreaView style={styles.container}>
             <TouchableOpacity onPress={() => navigator.navigate("Mosaic")}>
-                <Text style={styles.text}>Mosaic</Text>
+                <Text style={styles.text}>MOSAIC</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigator.navigate("Account")}>
