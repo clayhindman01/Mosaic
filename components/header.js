@@ -1,24 +1,38 @@
 import React, { useState } from "react";
 import firebase from '../database/firebase';
-import {SafeAreaView, Text, Image, StyleSheet, TouchableOpacity} from 'react-native'
+import {SafeAreaView, View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native'
 import { NavigationRouteContext, useNavigation } from "@react-navigation/native";
+import { Icon } from 'react-native-elements';
 
 export default function Header(props) {
     const user = firebase.auth().currentUser
     const navigator = useNavigation();
 
     return(
+        // Mosaic Text
         <SafeAreaView style={styles.container}>
-            <TouchableOpacity onPress={() => navigator.navigate("Mosaic")}>
-                <Text style={styles.text}>MOSAIC</Text>
-            </TouchableOpacity>
+            <View style={styles.row}>
+                <TouchableOpacity onPress={() => navigator.navigate("Mosaic")}>
+                    <Text style={styles.text}>Mosaic</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigator.navigate("Account")}>
+                {/* Bell Icon */}
+                <TouchableOpacity onPress={() => navigator.navigate("Account")}>
+                    <Icon
+                    style={props.includeImage? styles.icon: styles.noIcon}
+                    name="bell-outline"
+                    type="material-community"
+                    color="white"
+                    size={25}
+                    />
+                </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity onPress={() => console.log("Pressed Account")}>
                 <Image 
-                    style={props.includeImage? styles.image: styles.noImage}
                     source={{uri: user.photoURL}}
+                    style={styles.image}
                 />
-                
             </TouchableOpacity>
         </SafeAreaView>
     );
@@ -27,26 +41,37 @@ export default function Header(props) {
 const styles = StyleSheet.create({
     container: {
         top: 0,
+        backgroundColor: '#1B1E28',
+        height: 250,
+        alignItems: "center"
+    },
+    row: {
         display: 'flex',
         flexDirection: "row",
         justifyContent: 'space-between',
-        backgroundColor: '#2b3650',
-        height: 100,
-        alignItems: "center"
+        width: '100%',
     },
     image: {
-        width: 40,
-        height: 40,
-        borderRadius: 100,
-        marginRight: 10,
+        width: 75,
+        height: 75,
+        borderRadius: 50,
+
     },
     text: {
         color: "#fff",
-        marginLeft: 15,
-        fontSize: 24,
+        marginLeft: 25,
+        marginTop: 5,
+        fontSize: 28,
         fontWeight: 'bold',
     },
-    noImage: {
+    noIcon: {
         display: "none"
+    },
+    icon: {
+        marginRight: 25,
+        marginTop: 5,
+        width: 40,
+        height: 40,
+        marginRight: 10,
     }
 })
