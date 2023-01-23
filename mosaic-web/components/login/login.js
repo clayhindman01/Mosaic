@@ -55,7 +55,7 @@ export default class Login extends Component {
     return (
       <View style={styles.container}> 
         <View style={{flex: 1, flexDirection: 'column',justifyContent: 'center'}}>
-          <Text style={styles.loginText}>Log In.</Text>
+          <Text style={styles.loginText}>Mosaic</Text>
         </View>
         <View style={styles.slantTriange}></View>
         
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     color: '#2b3650',
     marginTop: 120,
     padding: 35,
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: 'bold'
   },
   preloader: {
