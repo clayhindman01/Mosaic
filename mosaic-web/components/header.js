@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import firebase from '../database/firebase';
 import {SafeAreaView, View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native'
 import { NavigationRouteContext, useNavigation } from "@react-navigation/native";
 import { Icon } from 'react-native-elements';
 
 export default function Header(props) {
-    const user = firebase.auth().currentUser
     const navigator = useNavigation();
 
     return(
@@ -30,7 +28,6 @@ export default function Header(props) {
 
             <TouchableOpacity onPress={() => console.log("Pressed Account")}>
                 <Image 
-                    source={{uri: user.photoURL}}
                     style={styles.image}
                 />
             </TouchableOpacity>

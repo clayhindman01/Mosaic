@@ -1,5 +1,5 @@
 // App.js
-import * as React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import 'react-native-gesture-handler';
@@ -13,6 +13,9 @@ import Canvas from './navigation/pages/Canvas';
 
 const Stack = createStackNavigator();
 function MyStack() {
+
+  const [user, setUser] = useState([]);
+
   return (
     <Stack.Navigator
       initialRouteName="Login"
@@ -22,20 +25,34 @@ function MyStack() {
       <Stack.Screen 
         name="Signup" 
         component={Signup} 
-        options={{ title: 'Signup' }}
+        ooptions={
+          [
+            { 
+              title: 'Signup',
+              headerLeft: null,
+            }
+          ]
+        }
+        initialParams={{user: user, setUser: setUser}}
       />       
       <Stack.Screen 
         name="Login" 
         component={Login} 
         options={
-          [{title: 'Login'},
-          {headerLeft: null} ]
+          [
+            { 
+              title: 'Login',
+              headerLeft: null,
+            }
+          ]
         }
+        initialParams={{user: user, setUser: setUser}}
       />
       <Stack.Screen 
        name="Mosaic" 
        component={Homepage} 
        options={{header: "Homepage", gestureEnabled: false}}
+       
       />
       <Stack.Screen
         name="Canvas"

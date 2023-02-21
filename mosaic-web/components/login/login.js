@@ -1,51 +1,24 @@
 // components/login.js
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
-import firebase from '../../database/firebase';
 import { LinearGradient } from 'expo-linear-gradient';
+import { getPassword, getUserByEmail } from '../../api/apiController';
 
-export default class Login extends Component {
-  
-  constructor() {
-    super();
-    this.state = { 
-      email: '', 
-      password: '',
-      isLoading: false
-    }
-  }
-  updateInputVal = (val, prop) => {
-    const state = this.state;
-    state[prop] = val;
-    this.setState(state);
-  }
-  userLogin = () => {
-    if(this.state.email === '' && this.state.password === '') {
+export default function Login(props) {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  userLogin = async () => {
+    if(email === '' && password === '') {
       Alert.alert('Enter details to signin!')
     } else {
-      this.setState({
-        isLoading: true,
-      })
-      firebase
-      .auth()
-      .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then((res) => {
-        this.setState({
-          isLoading: false,
-          email: '', 
-          password: ''
-        })
-        this.props.navigation.navigate('Mosaic')
-      })
-      .catch(error => {
-        this.setState({isLoading: false})
-        alert(error.message)
-        navigator.navigate('Signup')
-      })
+      setIsLoading(true)
+      await getUserByEmail(email, password, props.route.params.setUser, props.navigation.navigate)
     }
   }
-  render() {
-    if(this.state.isLoading){
+    if(isLoading){
       return(
         <View style={styles.preloader}>
           <ActivityIndicator size="large" color="#9E9E9E"/>
@@ -69,28 +42,28 @@ export default class Login extends Component {
               style={styles.inputStyle}
               placeholder="Email"
               placeholderTextColor="lightgray"
-              value={this.state.email}
-              onChangeText={(val) => this.updateInputVal(val, 'email')}
+              value={email}
+              onChangeText={(event) => setEmail(event)}
             />
             <TextInput
               style={styles.inputStyle}
               placeholderTextColor="lightgray"
               placeholder="Password"
-              value={this.state.password}
-              onChangeText={(val) => this.updateInputVal(val, 'password')}
+              value={password}
+              onChangeText={event => setPassword(event)}
               maxLength={15}
               secureTextEntry={true}
             />  
           </View> 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => this.userLogin()}
+          onPress={() => userLogin()}
         >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => this.props.navigation.navigate('Signup')}
+          onPress={() => props.navigation.navigate('Signup')}
         >
           <Text style={styles.buttonText}>Signup</Text>
         </TouchableOpacity>   
@@ -100,7 +73,6 @@ export default class Login extends Component {
       </View>
     );
   }
-}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
